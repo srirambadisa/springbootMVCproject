@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Product</title>
+</head>
+<body>
+    <h1>Edit Product</h1>
+
+    <!-- Error Message Display (Optional) -->
+    <div th:if="${errorMessage}" style="color: red;">
+        <p th:text="${errorMessage}"></p>
+    </div>
+
+    <form th:action="@{/products/update}" th:object="${productModel}" method="post">
+        <!-- Hidden Input for ID (Ensure productModel has id field) -->
+        <!--<input type="hidden" th:field="*{id}" />-->
+
+        <!-- Product Name Input -->
+        <label for="name">Product Name:</label>
+        <input type="text" id="name" th:field="*{name}" required />
+        <br/>
+
+        <!-- Product Price Input -->
+        <label for="price">Product Price:</label>
+        <input type="number" id="price" th:field="*{price}" step="0.01" required />
+        <br/>
+		
+		<!-- Product Quantity Input -->
+		<label for="quantity">Product Quantity:</label>
+		<input type="number" id="quantity" th:field="*{quantity}" required />
+		<br/>
+
+		<!-- Product Brand Input -->
+		<label for="brand">Product Brand:</label>
+		<input type="text" id="brand" th:field="*{brand}" required />
+		<br/>
+
+		<!-- Product Made In (Country) Input -->
+		<label for="madeIn">Made In (Country):</label>
+		<input type="text" id="madeIn" th:field="*{madeIn}" required />
+		<br/>
+
+
+        <!-- Submit Button -->
+        <button type="submit">Update Product</button>
+    </form>
+
+    <!-- Back to Product List Link -->
+    <a href="/products">Back to Products List</a>
+</body>
+</html>

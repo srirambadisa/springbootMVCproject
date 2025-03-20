@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Product Details</title>
+</head>
+<body>
+	<center>
+
+    <h1>Product Details</h1>
+
+    <!-- Check if the product object is not null -->
+    <div th:if="${product != null}">
+        <table border="1">
+            <tr>
+                <th>Name</th>
+                <td th:text="${product.name}"></td>
+            </tr>
+            <tr>
+                <th>Price</th>
+                <td th:text="${product.price}"></td>
+            </tr>
+            <tr>
+                <th>Quantity</th>
+                <td th:text="${product.quantity}"></td>
+            </tr>
+            <tr>
+                <th>Brand</th>
+                <td th:text="${product.brand}"></td>
+            </tr>
+            <tr>
+                <th>Made In</th>
+                <td th:text="${product.madeIn}"></td>
+            </tr>
+            <tr>
+                <th>Total Amount</th>
+                <td th:text="${product.totalAmount}"></td>
+            </tr>
+            <tr>
+                <th>Tax Amount</th>
+                <td th:text="${product.taxAmount}"></td>
+            </tr>
+            <!--<tr>
+                <th>Created At</th>
+                <td th:text="${#dates.format(product.createdAt, 'yyyy-MM-dd HH:mm')}"></td>  Format createdAt 
+            </tr>-->
+            <tr>
+                <th>Created By</th>
+                <td th:text="${product.createdBy}"></td>
+            </tr>
+        </table>
+    </div>
+
+    <div th:if="${msg}">
+        <h1><p style="color: crimson;" th:text="${msg}">Product not found.</p></h1>
+    </div>
+
+</body>
+</html>

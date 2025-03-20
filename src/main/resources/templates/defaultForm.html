@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Form</title>
+</head>
+<body>
+	<center>
+    <h1>Product Form</h1>
+    <form th:action="@{/saveproduct}" th:object="${product}" method="post">
+        
+        
+
+        <label>Name:</label>
+        <input type="text" th:field="*{name}" id="name" required /><br><br>
+
+        <label>Price:</label>
+        <input type="number" th:field="*{price}" id="price" step="0.01" required /><br><br>
+
+        <label>Quantity:</label>
+        <input type="number" th:field="*{quantity}" id="quantity" required /><br><br>
+		
+		<label>Brand:</label>
+		<input type="text" th:field="*{brand}" id="quantity" required /><br><br>
+		
+	    <label>madeIn:</label>
+	    <input type="text" th:field="*{madeIn}" id="quantity" required /><br><br>
+
+        <button type="submit">submit</button>
+    </form><br>
+	<a href="viewProducts">view all Products</a>
+</body>
+</html>
