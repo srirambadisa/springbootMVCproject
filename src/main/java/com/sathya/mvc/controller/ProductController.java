@@ -24,7 +24,7 @@ public class ProductController
 	@GetMapping("/wish") 
 	public String greet() 
 	{ 
-		return "file1"; 
+		return "message"; 
 	}
 
 	@GetMapping("/emptyform") 
