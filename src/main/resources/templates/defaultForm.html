@@ -1,34 +1,106 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Product Form</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, rgb(162, 30, 152), #a29bfe);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+        .container {
+            background-color: rgb(192, 254, 254);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+        h1 {
+            color: #0984e3;
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            color: #2d3436;
+        }
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        input:focus {
+            border-color: #0984e3;
+            outline: none;
+            box-shadow: 0 0 8px rgba(9, 132, 227, 0.2);
+        }
+        button {
+            background-color: #00cec9;
+            color: white;
+            border: none;
+            padding: 14px;
+            width: 100%;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #00b894;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #0984e3;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-	<center>
-    <h1>Product Form</h1>
-    <form th:action="@{/saveproduct}" th:object="${product}" method="post">
-        
-        
+    <div class="container">
+        <h1>Product Form</h1>
+        <form th:action="@{/saveproduct}" th:object="${product}" method="post">
+            <label>Name:</label>
+            <input type="text" th:field="*{name}" id="name"  />
+			<p style="color: red;" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
 
-        <label>Name:</label>
-        <input type="text" th:field="*{name}" id="name" required /><br><br>
 
-        <label>Price:</label>
-        <input type="number" th:field="*{price}" id="price" step="0.01" required /><br><br>
+            <label>Price:</label>
+            <input type="number" th:field="*{price}" id="price"  />
+			<p style="color: red;" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></p>
 
-        <label>Quantity:</label>
-        <input type="number" th:field="*{quantity}" id="quantity" required /><br><br>
-		
-		<label>Brand:</label>
-		<input type="text" th:field="*{brand}" id="quantity" required /><br><br>
-		
-	    <label>madeIn:</label>
-	    <input type="text" th:field="*{madeIn}" id="quantity" required /><br><br>
+            <label>Quantity:</label>
+            <input type="number" th:field="*{quantity}" id="quantity"  />
+			<p style="color: red;" th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></p>
 
-        <button type="submit">submit</button>
-    </form><br>
-	<a href="viewProducts">view all Products</a>
+            <label>Brand:</label>
+            <input type="text" th:field="*{brand}" id="brand"  />
+			<p style="color: red;" th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}"></p>
+
+            <label>Made In:</label>
+            <input type="text" th:field="*{madeIn}" id="madeIn"  />
+			<p style="color: red;" th:if="${#fields.hasErrors('madeIn')}" th:errors="*{madeIn}"></p>
+
+            <button type="submit">Submit</button>
+        </form>
+        <a href="viewProducts">View All Products</a>
+    </div>
 </body>
 </html>

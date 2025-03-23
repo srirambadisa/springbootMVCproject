@@ -2,50 +2,109 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Edit Product</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, rgb(231, 107, 206), #fad0c4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: rgb(124, 209, 201);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+            animation: fadeIn 1s ease-in-out;
+            width: 100%;
+            max-width: 500px;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        h1 {
+            color: #ff6b81;
+            text-align: center;
+            font-weight: 600;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            color: #555;
+        }
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+        input:focus {
+            border-color: #ff6b81;
+            outline: none;
+        }
+        button {
+            background-color: rgb(255, 128, 0);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            cursor: pointer;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-top: 20px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        button:hover {
+            background-color: #e84118;
+            transform: scale(1.05);
+        }
+        a {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+            color: #ff4757;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        a:hover {
+            color: #e84118;
+        }
+    </style>
 </head>
 <body>
-    <h1>Edit Product</h1>
+    <div class="container">
+        <h1>Edit Product</h1>
 
-    <!-- Error Message Display (Optional) -->
-    <div th:if="${errorMessage}" style="color: red;">
-        <p th:text="${errorMessage}"></p>
+        <form th:action="@{/update/{id}(id=${productEntity.id})}" th:object="${productEntity}" method="post">
+            <!--<label for="id">Product ID:</label>-->
+            <input type="hidden" id="id" th:field="*{id}" disabled />
+
+            <label for="name">Product Name:</label>
+            <input type="text" id="name" th:field="*{name}" required />
+
+            <label for="price">Product Price:</label>
+            <input type="number" id="price" th:field="*{price}" step="0.01" required />
+
+            <label for="quantity">Product Quantity:</label>
+            <input type="number" id="quantity" th:field="*{quantity}" required />
+
+            <label for="brand">Product Brand:</label>
+            <input type="text" id="brand" th:field="*{brand}" required />
+
+            <label for="madeIn">Made In (Country):</label>
+            <input type="text" id="madeIn" th:field="*{madeIn}" required />
+
+            <button type="submit">Update Product</button>
+        </form>
+
+        <a href="/viewProducts">Back to Products List</a>
     </div>
-
-    <form th:action="@{/products/update}" th:object="${productModel}" method="post">
-        <!-- Hidden Input for ID (Ensure productModel has id field) -->
-        <!--<input type="hidden" th:field="*{id}" />-->
-
-        <!-- Product Name Input -->
-        <label for="name">Product Name:</label>
-        <input type="text" id="name" th:field="*{name}" required />
-        <br/>
-
-        <!-- Product Price Input -->
-        <label for="price">Product Price:</label>
-        <input type="number" id="price" th:field="*{price}" step="0.01" required />
-        <br/>
-		
-		<!-- Product Quantity Input -->
-		<label for="quantity">Product Quantity:</label>
-		<input type="number" id="quantity" th:field="*{quantity}" required />
-		<br/>
-
-		<!-- Product Brand Input -->
-		<label for="brand">Product Brand:</label>
-		<input type="text" id="brand" th:field="*{brand}" required />
-		<br/>
-
-		<!-- Product Made In (Country) Input -->
-		<label for="madeIn">Made In (Country):</label>
-		<input type="text" id="madeIn" th:field="*{madeIn}" required />
-		<br/>
-
-
-        <!-- Submit Button -->
-        <button type="submit">Update Product</button>
-    </form>
-
-    <!-- Back to Product List Link -->
-    <a href="/products">Back to Products List</a>
 </body>
 </html>

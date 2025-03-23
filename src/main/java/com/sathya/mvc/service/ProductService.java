@@ -31,7 +31,7 @@ public class ProductService
 		double totalAmount=price*quantity;
 		double tax=totalAmount*18/100;
 		
-		productEntity.setTotalAmount(totalAmount);
+		productEntity.setTotalAmount(totalAmount+tax);
 		productEntity.setTaxAmount(tax);
 		productEntity.setCreatedAt(LocalDateTime.now());
 		productEntity.setCreatedBy(System.getProperty("user.name"));
@@ -60,17 +60,44 @@ public class ProductService
 	}
 
 
-	public ProductModel editOne(long id) 
+	public ProductEntity editOne(long id) 
 	{
 		ProductEntity productEntity=productRepository.findById(id).get();
-		ProductModel productModel=new ProductModel();
-		productModel.setName(productEntity.getName());
-		productModel.setPrice(productEntity.getPrice());
-		productModel.setQuantity(productEntity.getQuantity());
-		productModel.setBrand(productEntity.getBrand());
-		productModel.setMadeIn(productEntity.getMadeIn());
+		/*
+		 * ProductModel productModel=new ProductModel();
+		 * productModel.setName(productEntity.getName());
+		 * productModel.setPrice(productEntity.getPrice());
+		 * productModel.setQuantity(productEntity.getQuantity());
+		 * productModel.setBrand(productEntity.getBrand());
+		 * productModel.setMadeIn(productEntity.getMadeIn());
+		 */
+		return productEntity;
 		
-		return productModel;
+	}
+
+
+
+
+	public void updateOne(long id, ProductModel productModel) {
+		ProductEntity productEntity=productRepository.findById(id).get();
+		productEntity.setName(productModel.getName());
+		productEntity.setPrice(productModel.getPrice());
+		productEntity.setQuantity(productModel.getQuantity());
+		productEntity.setBrand(productModel.getBrand());
+		productEntity.setMadeIn(productModel.getMadeIn());
+		
+		double price=productModel.getPrice();
+		int quantity=productModel.getQuantity();
+		
+		double totalAmount=price*quantity;
+		double tax=totalAmount*18/100;
+		
+		productEntity.setTotalAmount(totalAmount+tax);
+		productEntity.setTaxAmount(tax);
+		productEntity.setCreatedAt(LocalDateTime.now());
+		productEntity.setCreatedBy(System.getProperty("user.name"));
+		
+		productRepository.save(productEntity);
 		
 	}
 

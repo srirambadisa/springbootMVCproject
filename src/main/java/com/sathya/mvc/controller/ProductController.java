@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.sathya.mvc.entity.ProductEntity;
 import com.sathya.mvc.model.ProductModel;
 import com.sathya.mvc.service.ProductService;
+
+import jakarta.validation.Valid;
 
 @Controller
 public class ProductController 
@@ -36,6 +39,7 @@ public class ProductController
 	@GetMapping("/defaultform") 
 	public String getProductForm(Model model) {
 		ProductEntity product=new ProductEntity(); 
+		product.setPrice(10);
 		product.setBrand("APPLE");
 		product.setMadeIn("India");
 
@@ -44,10 +48,19 @@ public class ProductController
 
 	}
 	@PostMapping("/saveproduct")
-	public String saveProductForm(@ModelAttribute ProductModel productModel)
+	public String saveProductForm(@Valid @ModelAttribute("product") ProductModel productModel,BindingResult bindingResult)
 	{
-		productService.saveProductData(productModel);
-		return "success";
+		if(bindingResult.hasErrors())
+		{
+			return "defaultForm";
+		}
+		else
+		{
+			productService.saveProductData(productModel);
+			return "success";
+			
+		}
+		
 	}
 
 	@GetMapping("/viewProducts")
@@ -85,10 +98,17 @@ public class ProductController
 	@GetMapping("/editOne/{id}")
 	public String editOne(@PathVariable long id,Model model)
 	{
-		ProductModel productModel=productService.editOne(id);
-		model.addAttribute("productModel", productModel);
+		ProductEntity productEntity=productService.editOne(id);
+		model.addAttribute("productEntity", productEntity);
+		/* model.addAttribute(id); */
 		return "editOne";
 	}
 	
+	@PostMapping("/update/{id}")
+	public String update(@PathVariable long id,ProductModel productModel)
+	{
+		productService.updateOne(id,productModel);
+		return "redirect:/viewProducts";
+	}
 
 }
